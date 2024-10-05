@@ -1,0 +1,32 @@
+package com.javaweb.WebsiteRoomForRent.dtos;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.util.Date;
+
+@Data //toString
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO {
+    @JsonProperty("fullname")
+    private String fullname;
+
+    @JsonProperty("phone")
+    @NotBlank(message = "Phone number is required")
+    private String phoneNumber;
+
+    @NotBlank(message = "Password can not be blank")
+    private String password;
+
+    @JsonProperty("retype_password")
+    private String retypePassword;
+
+    @JsonProperty("username")
+    private String username;
+}

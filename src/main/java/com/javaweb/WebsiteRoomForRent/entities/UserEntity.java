@@ -1,12 +1,13 @@
 package com.javaweb.WebsiteRoomForRent.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity extends BaseEntity {
+@Builder
+public class UserEntity extends BaseEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +28,8 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "username", nullable = false, unique = true)
+//    username
+    @Column(name = "username", nullable = false)
     private String username;
 
     @Column(name = "fullname", nullable = false)
@@ -49,4 +52,12 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "userid", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CustomerEntity> customers = new ArrayList<>();
+
+//    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+//        authorityList.add(new SimpleGrantedAuthority("ROLE_"+getRole().getName().toUpperCase()));
+        authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return authorityList;
+    }
 }
