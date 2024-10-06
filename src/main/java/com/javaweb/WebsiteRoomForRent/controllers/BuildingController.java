@@ -25,7 +25,7 @@ public class BuildingController {
     private final BuildingService buildingService;
     private final BuildingConverter buildingConverter;
 
-    @GetMapping("/search")
+    @GetMapping
     public ResponseEntity findBuilding(@RequestParam Map<String, Object> searchFields) {
         try {
             return ResponseEntity.ok(buildingService.searchBuilding(buildingConverter.toBuildingSearchRequests(searchFields)));
@@ -34,8 +34,8 @@ public class BuildingController {
         }
     }
 
-    @PostMapping("")
-    public ResponseEntity addBuilding(@RequestBody @Valid BuildingDTO buildingDTO, BindingResult bindingResult) {
+    @PostMapping
+    public ResponseEntity addOrUpdateBuilding(@RequestBody @Valid BuildingDTO buildingDTO, BindingResult bindingResult) {
         try {
             if(bindingResult.hasErrors()) {
                 List<String> errorDetails = bindingResult.getFieldErrors()
@@ -44,13 +44,13 @@ public class BuildingController {
                         .collect(Collectors.toList());
                 return ResponseEntity.badRequest().body(errorDetails);
             }
-            return ResponseEntity.ok(buildingService.createBuilding(buildingDTO));
+            return ResponseEntity.ok(buildingService.createOrUpdateBuilding(buildingDTO));
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteBuilding(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(buildingService.deleteBuilding(id));

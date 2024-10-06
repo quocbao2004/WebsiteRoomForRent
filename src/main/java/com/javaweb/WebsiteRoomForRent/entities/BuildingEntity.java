@@ -61,14 +61,15 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "electricityfee")
     private Long electricityfee;
 
+
     @Column(name = "deposit")
     private String deposit;
 
-    @Column(name = "payment")
-    private String payment;
-
     @Column(name="TotalNumberOfAvailableRooms")
-    private Long TotalNumberOfAvailableRooms;
+    private Long totalnumberofavailablerooms;
+
+    @Column
+    private String description;
 
     @ManyToOne
     @JoinColumn(name ="userid")

@@ -1,16 +1,39 @@
 package com.javaweb.WebsiteRoomForRent.converters;
 
 import com.javaweb.WebsiteRoomForRent.dtos.BuildingDTO;
+import com.javaweb.WebsiteRoomForRent.entities.BuildingEntity;
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
+import com.javaweb.WebsiteRoomForRent.utils.BuildingSearchRequestUtil;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class BuildingConverter {
 
-    public BuildingDTO toBuildingDTO(Map<String, Object> mp) {
-        return null;
+    private final ModelMapper modelMapper;
+    private final BuildingSearchRequestUtil buildingSearchRequestUtil;
+
+    public BuildingDTO toDTO(BuildingEntity buildingEntity) {
+        return modelMapper.map(buildingEntity, BuildingDTO.class);
     }
-    public BuildingSearchRequests toBuildingSearchRequests(Map<String, Object> mp) {return null;}
+
+    public BuildingSearchRequests toBuildingSearchRequests(Map<String, Object> mp) {
+        BuildingSearchRequests buildingSearchRequests = new BuildingSearchRequests();
+        buildingSearchRequests.setName(buildingSearchRequestUtil.getObject(mp.get("name"), String.class));
+        buildingSearchRequests.setWard(buildingSearchRequestUtil.getObject(mp.get("ward"), String.class));
+        buildingSearchRequests.setType(buildingSearchRequestUtil.getObject(mp.get("type"), String.class));
+        buildingSearchRequests.setDistrict(buildingSearchRequestUtil.getObject(mp.get("district"), String.class));
+        buildingSearchRequests.setStreet(buildingSearchRequestUtil.getObject(mp.get("street"), String.class));
+        buildingSearchRequests.setFloorArea(buildingSearchRequestUtil.getObject(mp.get("floorArea"), Long.class));
+        buildingSearchRequests.setRentPrice(buildingSearchRequestUtil.getObject(mp.get("rentPrice"), Long.class));
+        return buildingSearchRequests;
+    }
+
+    public BuildingEntity toBuildingEntity(BuildingDTO dto) {
+        return modelMapper.map(dto, BuildingEntity.class);
+    }
 }
