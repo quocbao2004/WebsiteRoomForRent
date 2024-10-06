@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b43ebd2-e3e3-43cf-a998-b036dee86d30" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/repository/RoleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/responses/CustomerSearchResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/components/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/components/JwtTokenUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/dtos/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/dtos/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/entities/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/entities/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/entities/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/entities/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/dtos/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/dtos/CustomerDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/javaweb/WebsiteRoomForRent/components/JwtTokenUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/javaweb/WebsiteRoomForRent/components/JwtTokenUtil.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,25 +45,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.WebsiteRoomForRentApplication.executor": "Debug",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Workspace/javawebt12/shopapp-backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.WebsiteRoomForRentApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Workspace/Project/WebsiteRoomForRent&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Workspace\Project\WebsiteRoomForRent\src\main\java\com\javaweb\WebsiteRoomForRent" />
@@ -105,7 +102,8 @@
       <workItem from="1728145674366" duration="11014000" />
       <workItem from="1728184196019" duration="90000" />
       <workItem from="1728184294451" duration="425000" />
-      <workItem from="1728185551482" duration="5823000" />
+      <workItem from="1728185551482" duration="8724000" />
+      <workItem from="1728203242368" duration="6591000" />
     </task>
     <servers />
   </component>
@@ -171,34 +169,14 @@
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="142" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="143" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="144" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java</url>
-          <line>26</line>
-          <option name="timeStamp" value="145" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/services/impl/CustomerImpl.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="148" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/controllers/CustomerController.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/javaweb/WebsiteRoomForRent/controllers/CustomerController.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="151" />
+          <line>26</line>
+          <option name="timeStamp" value="159" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
