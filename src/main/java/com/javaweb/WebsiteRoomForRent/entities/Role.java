@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "roles")
 @Getter
@@ -20,5 +23,9 @@ public class Role {
     @Column(name = "name", nullable = false)
     private String name;
 
+//    @OneToMany(mappedBy = "userid", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private List<UserEntity> users = new ArrayList<>();
+
     public static String ADMIN = "ADMIN";
+    public static String USER = "USER";
 }

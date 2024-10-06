@@ -44,8 +44,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name ="address")
     private String address;
 
-    @Column(name="role")
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     @OneToMany(mappedBy = "userid", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BuildingEntity> buildings = new ArrayList<>();
@@ -56,8 +57,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
 //    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-//        authorityList.add(new SimpleGrantedAuthority("ROLE_"+getRole().getName().toUpperCase()));
-        authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        authorityList.add(new SimpleGrantedAuthority("ROLE_"+getRole().getName().toUpperCase()));
+//        authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         return authorityList;
     }
 }

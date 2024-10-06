@@ -4,7 +4,9 @@ import com.javaweb.WebsiteRoomForRent.components.JwtTokenUtil;
 import com.javaweb.WebsiteRoomForRent.customexceptions.DataNotFoundException;
 import com.javaweb.WebsiteRoomForRent.customexceptions.PermissionDenyException;
 import com.javaweb.WebsiteRoomForRent.dtos.UserDTO;
+import com.javaweb.WebsiteRoomForRent.entities.Role;
 import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
+import com.javaweb.WebsiteRoomForRent.repository.RoleRepository;
 import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
 import com.javaweb.WebsiteRoomForRent.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
@@ -30,6 +33,11 @@ public class UserServiceImpl implements UserService {
     public UserEntity createUser(UserDTO userDTO) throws Exception {
         //register user
         String phoneNumber = userDTO.getPhoneNumber();
+        Role role = roleRepository.findById(userDTO.getRoleId())
+                .orElseThrow(() -> new DataNotFoundException("Role not found")).getRole();
+        if(role.getName().toUpperCase().equals(Role.ADMIN)) {
+            throw new PermissionDenyException("You cannot register an admin account");
+        }
         //convert from userDTO => userEntity
         UserEntity newUser = UserEntity.builder()
                 .fullname(userDTO.getFullname())
@@ -38,7 +46,7 @@ public class UserServiceImpl implements UserService {
                 .username(userDTO.getUsername())
                 .build();
 
-        newUser.setRole("ADMIN");
+        newUser.setRole(role);
 
         String password = userDTO.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
