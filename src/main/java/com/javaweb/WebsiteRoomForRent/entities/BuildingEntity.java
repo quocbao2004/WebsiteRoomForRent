@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="building")
 @Setter
@@ -74,4 +77,7 @@ public class BuildingEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name ="userid")
     private UserEntity userid;
+
+    @OneToMany(mappedBy = "building", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<ImageEntity> images = new ArrayList<>();
 }

@@ -1,7 +1,7 @@
-package com.javaweb.WebsiteRoomForRent.repos.custom.impl;
+package com.javaweb.WebsiteRoomForRent.repository.custom.impl;
 
 import com.javaweb.WebsiteRoomForRent.entities.BuildingEntity;
-import com.javaweb.WebsiteRoomForRent.repos.custom.BuildingRepoCustom;
+import com.javaweb.WebsiteRoomForRent.repository.custom.BuildingRepositoryCustom;
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 @Repository
-public class BuildingRepoImpl implements BuildingRepoCustom {
+public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;

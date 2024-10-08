@@ -3,6 +3,9 @@ package com.javaweb.WebsiteRoomForRent.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -70,4 +73,7 @@ public class BuildingDTO {
     private Long totalNumberOfAvailableRooms;
 
     private String desc;
+
+    private List<MultipartFile> images;
+    private List<MultipartFile> videos;
 }

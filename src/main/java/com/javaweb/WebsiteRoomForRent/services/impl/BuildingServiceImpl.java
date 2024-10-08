@@ -4,8 +4,8 @@ import com.javaweb.WebsiteRoomForRent.converters.BuildingConverter;
 import com.javaweb.WebsiteRoomForRent.dtos.BuildingDTO;
 import com.javaweb.WebsiteRoomForRent.entities.BuildingEntity;
 import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
-import com.javaweb.WebsiteRoomForRent.repos.BuildingRepo;
-import com.javaweb.WebsiteRoomForRent.repos.UserRepo;
+import com.javaweb.WebsiteRoomForRent.repository.BuildingRepository;
+import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
 import com.javaweb.WebsiteRoomForRent.services.BuildingService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BuildingServiceImpl implements BuildingService {
 
-    private final BuildingRepo buildingRepo;
+    private final BuildingRepository buildingRepo;
     private final BuildingConverter buildingConverter;
-    private final UserRepo userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<BuildingDTO> searchBuilding(BuildingSearchRequests buildingSearchRequests) {
@@ -31,8 +31,8 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingDTO createOrUpdateBuilding(BuildingDTO buildingDTO) {
         BuildingEntity building = buildingConverter.toBuildingEntity(buildingDTO);
-//        UserEntity user = userRepository.findById(1L).get();
-//        building.setUserid(user);
+        UserEntity user = userRepository.findById(1L).get();
+        building.setUserid(user);
         buildingRepo.save(building);
         return buildingDTO;
     }
@@ -41,5 +41,10 @@ public class BuildingServiceImpl implements BuildingService {
     public String deleteBuilding(Long id) {
         buildingRepo.deleteById(id);
         return "Delete Building " + id + " Successful";
+    }
+
+    @Override
+    public BuildingEntity getBuildingById(Long buildingId) {
+        return buildingRepo.findById(buildingId).get();
     }
 }
