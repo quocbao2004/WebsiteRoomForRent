@@ -1,4 +1,4 @@
-package com.javaweb.WebsiteRoomForRent.config;
+package com.javaweb.WebsiteRoomForRent.configurations;
 
 import com.javaweb.WebsiteRoomForRent.entities.Role;
 import com.javaweb.WebsiteRoomForRent.filters.JwtTokenFilter;
@@ -36,14 +36,9 @@ public class WebSecurityConfig {
                     requests
                             .requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
-                                    String.format("%s/users/login", apiPrefix),
-                                    "/images_and_videos/**"
+                                    String.format("%s/users/login", apiPrefix)
                             )
                             .permitAll()
-                            .requestMatchers(GET,
-                                    String.format("%s/building/show-images/**", apiPrefix)).permitAll()
-                            .requestMatchers(POST,
-                                    String.format("%s/building/upload-images/**", apiPrefix)).hasRole(Role.ADMIN)
                             .requestMatchers(GET,
                                     String.format("%s/building/**", apiPrefix)).permitAll()
                             .requestMatchers(POST,

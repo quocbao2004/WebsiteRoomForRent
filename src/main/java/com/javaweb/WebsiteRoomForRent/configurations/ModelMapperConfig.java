@@ -1,4 +1,4 @@
-package com.javaweb.WebsiteRoomForRent.config;
+package com.javaweb.WebsiteRoomForRent.configurations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

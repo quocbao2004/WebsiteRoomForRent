@@ -1,4 +1,4 @@
-package com.javaweb.WebsiteRoomForRent.config;
+package com.javaweb.WebsiteRoomForRent.configurations;
 
 
 import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
