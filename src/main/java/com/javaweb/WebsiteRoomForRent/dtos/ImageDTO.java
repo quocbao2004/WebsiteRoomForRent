@@ -11,6 +11,8 @@ import lombok.*;
 @Builder
 public class ImageDTO {
 
+    private Long id;
+
     @Min(value = 1, message = "Product's ID must be > 0")
     private Long buildingId;
 

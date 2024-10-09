@@ -78,6 +78,6 @@ public class BuildingEntity extends BaseEntity {
     @JoinColumn(name ="userid")
     private UserEntity userid;
 
-    @OneToMany(mappedBy = "building", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "building", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<ImageEntity> images = new ArrayList<>();
 }

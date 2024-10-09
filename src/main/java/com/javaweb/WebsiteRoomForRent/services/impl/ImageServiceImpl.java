@@ -20,11 +20,11 @@ public class ImageServiceImpl implements ImageService {
     private final BuildingRepository buildingRepository;
 
     @Override
-    public ImageEntity createBuildingImage(Long buildingId, ImageDTO imageDTO) throws Exception {
+    public ImageEntity createBuildingImage(Long buildingId, ImageDTO imageDTO) {
         BuildingEntity existingBuilding = buildingRepository.findById(buildingId)
                 .orElseThrow(() ->
                         new DataNotFoundException(
-                                "Cannot find product with id: "+imageDTO.getBuildingId()))  ;
+                                "Cannot find product with id: "+ imageDTO.getBuildingId()));
         ImageEntity imageEntity = ImageEntity.builder()
                 .building(existingBuilding)
                 .imageUrl(imageDTO.getImageUrl())
@@ -33,7 +33,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<String> getBuildingImages(Long buildingId) throws Exception {
+    public List<String> getBuildingImagesVids(Long buildingId) throws Exception {
         return imageRepository.findByBuildingId(buildingId).stream().map(it->it.getImageUrl()).toList();
     }
 }

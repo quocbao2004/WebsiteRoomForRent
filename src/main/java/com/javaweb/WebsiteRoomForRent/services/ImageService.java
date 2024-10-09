@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ImageService {
     ImageEntity createBuildingImage(Long buildingId, ImageDTO imageDTO) throws Exception;
-    List<String> getBuildingImages(Long buildingId) throws Exception;
+    List<String> getBuildingImagesVids(Long buildingId) throws Exception;
 }
