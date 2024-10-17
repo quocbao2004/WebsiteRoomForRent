@@ -18,7 +18,7 @@ import static org.springframework.http.HttpMethod.*;
 @Configuration
 //@EnableMethodSecurity
 @EnableWebSecurity
-@EnableWebMvc
+//@EnableWebMvc
 @RequiredArgsConstructor
 
 public class WebSecurityConfig {
@@ -41,6 +41,8 @@ public class WebSecurityConfig {
                             .permitAll()
                             .requestMatchers(GET,
                                     String.format("%s/building/**", apiPrefix)).permitAll()
+                            .requestMatchers(GET,
+                                    String.format("%s/image/**", apiPrefix)).permitAll()
                             .requestMatchers(POST,
                                     String.format("%s/building/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(PUT,
@@ -55,6 +57,10 @@ public class WebSecurityConfig {
                                     String.format("%s/customer/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(DELETE,
                                     String.format("%s/customer/**", apiPrefix)).hasAnyRole(Role.ADMIN)
+                            .requestMatchers(POST,
+                                    String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
+                            .requestMatchers(DELETE,
+                                    String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .anyRequest().authenticated();
                 });
         return http.build();

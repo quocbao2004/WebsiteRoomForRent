@@ -5,6 +5,8 @@ import com.javaweb.WebsiteRoomForRent.repository.custom.BuildingRepositoryCustom
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
@@ -13,6 +15,7 @@ import java.util.List;
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
+    private static final Logger log = LoggerFactory.getLogger(BuildingRepositoryImpl.class);
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -37,8 +40,18 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 Object value = item.get(buildingSearchRequests);
 
                 if (value != null) {
-                    if (item.getType().getName().equals("java.lang.Long") || item.getType().getName().equals("java.lang.Integer"))
+                    if(fieldName.compareTo("rentPrice") == 0) {
+                        if (buildingSearchRequests.getRentPrice() == 0) continue;
+                    }
+                    if(fieldName.compareTo("floorArea") == 0) {
+                        if(buildingSearchRequests.getFloorArea() == 0) continue;
+                    }
+                    if(fieldName.compareTo("id") == 0) {
                         where.append(" AND b." + fieldName + " = " + value + " ");
+                        continue;
+                    }
+                    if (item.getType().getName().equals("java.lang.Long") || item.getType().getName().equals("java.lang.Integer"))
+                        where.append(" AND b." + fieldName + " <= " + value + " ");
                     else
                         where.append(" AND b." + fieldName + " LIKE '%" + value + "%' ");
                 }

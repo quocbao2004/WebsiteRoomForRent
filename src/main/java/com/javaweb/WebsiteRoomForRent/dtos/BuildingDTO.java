@@ -72,8 +72,5 @@ public class BuildingDTO {
     @NotNull(message = "Building's number of available rooms can't be null")
     private Long totalNumberOfAvailableRooms;
 
-    private String desc;
-
-    private List<MultipartFile> images;
-    private List<MultipartFile> videos;
+    private String description;
 }

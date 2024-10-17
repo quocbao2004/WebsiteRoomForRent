@@ -11,7 +11,8 @@ public class BuildingSearchRequestUtil {
                 key = key != "" ? Long.valueOf(key.toString()) : null;
             else if(tClass.getTypeName().equals("java.lang.Integer"))
                 key = key != "" ? Integer.valueOf(key.toString()) : null;
-            else if(tClass.getTypeName().equals("java.lang.String")) key = key != "" ? key : null;
+            else if(tClass.getTypeName().equals("java.lang.String"))
+                key = key != "" ? key : null;
             return tClass.cast(key);
         }
         return null;

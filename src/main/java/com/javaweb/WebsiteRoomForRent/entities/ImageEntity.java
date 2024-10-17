@@ -21,7 +21,7 @@ public class ImageEntity {
     @Column(name = "image_url",length = 300, nullable = false)
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "building", nullable = false)
     private BuildingEntity building;
 }

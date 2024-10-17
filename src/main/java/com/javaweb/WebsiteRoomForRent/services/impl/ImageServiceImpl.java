@@ -10,7 +10,10 @@ import com.javaweb.WebsiteRoomForRent.services.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +21,8 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
     private final BuildingRepository buildingRepository;
+
+    public static final String STORAGE_DIRECTORY = "D:\\My_projects\\WebsiteRoomForRent\\images";
 
     @Override
     public ImageEntity createBuildingImage(Long buildingId, ImageDTO imageDTO) {
@@ -33,7 +38,22 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<String> getBuildingImagesVids(Long buildingId) throws Exception {
-        return imageRepository.findByBuildingId(buildingId).stream().map(it->it.getImageUrl()).toList();
+    public File getBuildingImagesVids(String fileName) throws Exception {
+        if (fileName == null) throw new NullPointerException("file name is null");
+        File fileToDownload = new File(STORAGE_DIRECTORY + File.separator + fileName);
+        if (!Objects.equals(fileToDownload.getParent(), STORAGE_DIRECTORY)) throw new SecurityException("Unsupported filename!");
+        if (!fileToDownload.exists()) throw new FileNotFoundException("No file named: " + fileName);
+        return fileToDownload;
+    }
+
+    @Override
+    public List<String> getBuildingImagesNames(Long buildingId) {
+        return imageRepository.findByBuildingId(buildingId).stream().map(it -> it.getImageUrl()).toList();
+    }
+
+    @Override
+    public String deleteBuildingImage(String fileName) {
+        imageRepository.deleteByImageUrl(fileName);
+        return "Delete Building Image " + fileName + " Successful";
     }
 }

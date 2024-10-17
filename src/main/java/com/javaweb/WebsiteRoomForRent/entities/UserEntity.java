@@ -60,4 +60,20 @@ public class UserEntity extends BaseEntity implements UserDetails {
         authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         return authorityList;
     }
+
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
+    }
 }

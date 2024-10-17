@@ -86,8 +86,6 @@ public class JwtTokenUtil {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         String phoneNumber = extractPhoneNumber(token);
-        System.out.println(phoneNumber);
-        System.out.println(userDetails.getUsername());
         return (phoneNumber.equals(userDetails.getUsername()))
                 && !isTokenExpired(token); //check hạn của token
     }

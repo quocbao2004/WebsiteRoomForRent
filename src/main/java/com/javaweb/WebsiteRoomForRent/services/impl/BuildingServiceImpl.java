@@ -7,6 +7,7 @@ import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
 import com.javaweb.WebsiteRoomForRent.repository.BuildingRepository;
 import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
+import com.javaweb.WebsiteRoomForRent.responses.BuildingSearchResponse;
 import com.javaweb.WebsiteRoomForRent.services.BuildingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,9 @@ public class BuildingServiceImpl implements BuildingService {
     private final UserRepository userRepository;
 
     @Override
-    public List<BuildingDTO> searchBuilding(BuildingSearchRequests buildingSearchRequests) {
+    public List<BuildingSearchResponse> searchBuilding(BuildingSearchRequests buildingSearchRequests) {
         List<BuildingEntity> list = buildingRepo.findAll(buildingSearchRequests);
-        List<BuildingDTO> res = list.stream().map((it -> buildingConverter.toDTO(it))).toList();
-        return res;
+        return list.stream().map((it -> buildingConverter.toBuildingSearchResponse(it))).toList();
     }
 
     @Override
@@ -34,6 +34,7 @@ public class BuildingServiceImpl implements BuildingService {
         UserEntity user = userRepository.findById(1L).get();
         building.setUserid(user);
         buildingRepo.save(building);
+        buildingDTO.setId(building.getId());
         return buildingDTO;
     }
 

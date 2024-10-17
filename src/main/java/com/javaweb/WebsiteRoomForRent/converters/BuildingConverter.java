@@ -3,6 +3,7 @@ package com.javaweb.WebsiteRoomForRent.converters;
 import com.javaweb.WebsiteRoomForRent.dtos.BuildingDTO;
 import com.javaweb.WebsiteRoomForRent.entities.BuildingEntity;
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
+import com.javaweb.WebsiteRoomForRent.responses.BuildingSearchResponse;
 import com.javaweb.WebsiteRoomForRent.utils.BuildingSearchRequestUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,12 +18,15 @@ public class BuildingConverter {
     private final ModelMapper modelMapper;
     private final BuildingSearchRequestUtil buildingSearchRequestUtil;
 
-    public BuildingDTO toDTO(BuildingEntity buildingEntity) {
-        return modelMapper.map(buildingEntity, BuildingDTO.class);
+    public BuildingSearchResponse toBuildingSearchResponse(BuildingEntity buildingEntity) {
+        BuildingSearchResponse res = modelMapper.map(buildingEntity, BuildingSearchResponse.class);
+        res.setImages(buildingEntity.getImages().stream().map(it -> it.getImageUrl()).toList());
+        return res;
     }
 
     public BuildingSearchRequests toBuildingSearchRequests(Map<String, Object> mp) {
         BuildingSearchRequests buildingSearchRequests = new BuildingSearchRequests();
+        buildingSearchRequests.setId(buildingSearchRequestUtil.getObject(mp.get("id"), Long.class));
         buildingSearchRequests.setName(buildingSearchRequestUtil.getObject(mp.get("name"), String.class));
         buildingSearchRequests.setWard(buildingSearchRequestUtil.getObject(mp.get("ward"), String.class));
         buildingSearchRequests.setType(buildingSearchRequestUtil.getObject(mp.get("type"), String.class));

@@ -2,8 +2,6 @@ package com.javaweb.WebsiteRoomForRent.requests;
 
 import lombok.*;
 
-import java.util.List;
-
 @Setter
 @Getter
 @NoArgsConstructor
@@ -11,6 +9,7 @@ import java.util.List;
 @Builder
 public class BuildingSearchRequests {
 
+    private Long id;
     private String name;
     private String ward;
     private String type;
