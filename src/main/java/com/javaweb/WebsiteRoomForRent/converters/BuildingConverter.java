@@ -32,8 +32,10 @@ public class BuildingConverter {
         buildingSearchRequests.setType(buildingSearchRequestUtil.getObject(mp.get("type"), String.class));
         buildingSearchRequests.setDistrict(buildingSearchRequestUtil.getObject(mp.get("district"), String.class));
         buildingSearchRequests.setStreet(buildingSearchRequestUtil.getObject(mp.get("street"), String.class));
-        buildingSearchRequests.setFloorArea(buildingSearchRequestUtil.getObject(mp.get("floorArea"), Long.class));
-        buildingSearchRequests.setRentPrice(buildingSearchRequestUtil.getObject(mp.get("rentPrice"), Long.class));
+        buildingSearchRequests.setFloorAreaFrom(buildingSearchRequestUtil.getObject(mp.get("floorAreaFrom"), Long.class));
+        buildingSearchRequests.setFloorAreaTo(buildingSearchRequestUtil.getObject(mp.get("floorAreaTo"), Long.class));
+        buildingSearchRequests.setRentPriceFrom(buildingSearchRequestUtil.getObject(mp.get("rentPriceFrom"), Long.class));
+        buildingSearchRequests.setRentPriceTo(buildingSearchRequestUtil.getObject(mp.get("rentPriceTo"), Long.class));
         return buildingSearchRequests;
     }
 

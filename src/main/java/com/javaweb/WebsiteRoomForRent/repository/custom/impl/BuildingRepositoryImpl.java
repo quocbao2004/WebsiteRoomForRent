@@ -5,8 +5,6 @@ import com.javaweb.WebsiteRoomForRent.repository.custom.BuildingRepositoryCustom
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
@@ -15,7 +13,6 @@ import java.util.List;
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
-    private static final Logger log = LoggerFactory.getLogger(BuildingRepositoryImpl.class);
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -24,6 +21,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         StringBuilder sql = new StringBuilder("SELECT * FROM building b ");
         StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
         queryNormal(buildingSearchRequests, where);
+        querySpecial(buildingSearchRequests, where);
         where.append(" GROUP BY b.id ");
         sql.append(where);
         return entityManager.createNativeQuery(sql.toString(), BuildingEntity.class).getResultList();
@@ -37,27 +35,41 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 item.setAccessible(true);
                 String fieldName = item.getName();
 
-                Object value = item.get(buildingSearchRequests);
+                if(!fieldName.startsWith("floorArea") && !fieldName.startsWith("rentPrice")) {
+                    Object value = item.get(buildingSearchRequests);
 
-                if (value != null) {
-                    if(fieldName.compareTo("rentPrice") == 0) {
-                        if (buildingSearchRequests.getRentPrice() == 0) continue;
+                    if (value != null) {
+                        if (item.getType().getName().equals("java.lang.Long") || item.getType().getName().equals("java.lang.Integer"))
+                            where.append(" AND b." + fieldName + " = " + value + " ");
+                        else
+                            where.append(" AND b." + fieldName + " LIKE '%" + value + "%' ");
                     }
-                    if(fieldName.compareTo("floorArea") == 0) {
-                        if(buildingSearchRequests.getFloorArea() == 0) continue;
-                    }
-                    if(fieldName.compareTo("id") == 0) {
-                        where.append(" AND b." + fieldName + " = " + value + " ");
-                        continue;
-                    }
-                    if (item.getType().getName().equals("java.lang.Long") || item.getType().getName().equals("java.lang.Integer"))
-                        where.append(" AND b." + fieldName + " <= " + value + " ");
-                    else
-                        where.append(" AND b." + fieldName + " LIKE '%" + value + "%' ");
                 }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private void querySpecial(BuildingSearchRequests buildingSearchRequests, StringBuilder where) {
+        Long floorAreaTo = buildingSearchRequests.getFloorAreaTo();
+        Long floorAreaFrom = buildingSearchRequests.getFloorAreaFrom();
+
+        if(floorAreaTo != null) {
+            where.append(" AND b.floorarea <= " + floorAreaTo + " ");
+        }
+        if(floorAreaFrom != null) {
+            where.append(" AND b.floorarea >= " + floorAreaFrom + " ");
+        }
+
+        Long rentPriceTo = buildingSearchRequests.getRentPriceTo();
+        Long rentPriceFrom = buildingSearchRequests.getRentPriceFrom();
+
+        if(rentPriceTo != null) {
+            where.append(" AND b.rentprice <= " + rentPriceTo + " ");
+        }
+        if(rentPriceFrom != null) {
+            where.append(" AND b.rentprice >= " + rentPriceFrom + " ");
         }
     }
 }

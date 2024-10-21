@@ -15,6 +15,8 @@ public class BuildingSearchRequests {
     private String type;
     private String district;
     private String street;
-    private Long floorArea;
-    private Long rentPrice;
+    private Long floorAreaFrom;
+    private Long floorAreaTo;
+    private Long rentPriceFrom;
+    private Long rentPriceTo;
 }
