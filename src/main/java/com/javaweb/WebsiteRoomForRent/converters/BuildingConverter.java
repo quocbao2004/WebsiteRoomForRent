@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -29,13 +32,14 @@ public class BuildingConverter {
         buildingSearchRequests.setId(buildingSearchRequestUtil.getObject(mp.get("id"), Long.class));
         buildingSearchRequests.setName(buildingSearchRequestUtil.getObject(mp.get("name"), String.class));
         buildingSearchRequests.setWard(buildingSearchRequestUtil.getObject(mp.get("ward"), String.class));
-        buildingSearchRequests.setType(buildingSearchRequestUtil.getObject(mp.get("type"), String.class));
         buildingSearchRequests.setDistrict(buildingSearchRequestUtil.getObject(mp.get("district"), String.class));
         buildingSearchRequests.setStreet(buildingSearchRequestUtil.getObject(mp.get("street"), String.class));
         buildingSearchRequests.setFloorAreaFrom(buildingSearchRequestUtil.getObject(mp.get("floorAreaFrom"), Long.class));
         buildingSearchRequests.setFloorAreaTo(buildingSearchRequestUtil.getObject(mp.get("floorAreaTo"), Long.class));
         buildingSearchRequests.setRentPriceFrom(buildingSearchRequestUtil.getObject(mp.get("rentPriceFrom"), Long.class));
         buildingSearchRequests.setRentPriceTo(buildingSearchRequestUtil.getObject(mp.get("rentPriceTo"), Long.class));
+
+        buildingSearchRequests.setType((mp.get("type") != "" ? Arrays.asList(mp.get("type").toString().split(",")) : null));
         return buildingSearchRequests;
     }
 

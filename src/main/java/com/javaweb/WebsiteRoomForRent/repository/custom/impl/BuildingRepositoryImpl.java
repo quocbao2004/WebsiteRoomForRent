@@ -35,7 +35,8 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 item.setAccessible(true);
                 String fieldName = item.getName();
 
-                if(!fieldName.startsWith("floorArea") && !fieldName.startsWith("rentPrice")) {
+                if(!fieldName.startsWith("floorArea") && !fieldName.startsWith("rentPrice")
+                    && !fieldName.equals("type")) {
                     Object value = item.get(buildingSearchRequests);
 
                     if (value != null) {
@@ -70,6 +71,16 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         }
         if(rentPriceFrom != null) {
             where.append(" AND b.rentprice >= " + rentPriceFrom + " ");
+        }
+
+        if(buildingSearchRequests.getType() != null && buildingSearchRequests.getType().size() > 0) {
+            where.append(" AND b.type IN (");
+            List<String> types = buildingSearchRequests.getType();
+            for(int i = 0; i < types.size(); ++i) {
+                where.append("'"+ types.get(i) + "'");
+                if(i != buildingSearchRequests.getType().size() - 1) where.append(",");
+            }
+            where.append(")");
         }
     }
 }
