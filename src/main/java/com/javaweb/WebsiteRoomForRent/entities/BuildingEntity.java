@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="building")
 @Setter
@@ -61,16 +64,20 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "electricityfee")
     private Long electricityfee;
 
+
     @Column(name = "deposit")
     private String deposit;
 
-    @Column(name = "payment")
-    private String payment;
-
     @Column(name="TotalNumberOfAvailableRooms")
-    private Long TotalNumberOfAvailableRooms;
+    private Long totalnumberofavailablerooms;
+
+    @Column
+    private String description;
 
     @ManyToOne
     @JoinColumn(name ="userid")
     private UserEntity userid;
+
+    @OneToMany(mappedBy = "building", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<ImageEntity> images = new ArrayList<>();
 }
