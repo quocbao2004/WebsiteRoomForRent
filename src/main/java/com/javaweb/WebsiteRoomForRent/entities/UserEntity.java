@@ -61,4 +61,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
 //        authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         return authorityList;
     }
+
+    @OneToMany(mappedBy="user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<TokenEntity> tokens = new ArrayList<>();
 }

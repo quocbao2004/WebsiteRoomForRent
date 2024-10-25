@@ -1,8 +1,6 @@
 package com.javaweb.WebsiteRoomForRent.filters;
 
-
 import com.javaweb.WebsiteRoomForRent.components.JwtTokenUtil;
-import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +26,6 @@ import java.util.List;
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Value("${api.prefix}")
     private String apiPrefix;
-
 
     private final UserDetailsService userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
@@ -68,14 +65,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private boolean isBypassToken(@NonNull  HttpServletRequest request) {
         final List<Pair<String, String>> bypassTokens = Arrays.asList(
-                Pair.of(String.format("%s/buildings", apiPrefix), "GET"),
                 Pair.of(String.format("%s/users/register", apiPrefix), "POST"),
-                Pair.of(String.format("%s/users/login", apiPrefix), "POST")
+                Pair.of(String.format("%s/users/login", apiPrefix), "POST"),
+                Pair.of(String.format("%s/building", apiPrefix), "GET"),
+                Pair.of(String.format("%s/image", apiPrefix), "GET")
         );
         for(Pair<String, String> bypassToken: bypassTokens) {
-            if (request.getServletPath().contains(bypassToken.getFirst()) &&
-                    request.getMethod().equals(bypassToken.getSecond())) {
-                return true;
+            if (request.getServletPath().contains(bypassToken.getFirst())
+                    && request.getMethod().equals(bypassToken.getSecond())) {
+                    return true;
             }
         }
         return false;

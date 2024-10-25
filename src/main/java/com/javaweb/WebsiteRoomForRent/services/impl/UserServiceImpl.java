@@ -5,12 +5,13 @@ import com.javaweb.WebsiteRoomForRent.customexceptions.DataNotFoundException;
 import com.javaweb.WebsiteRoomForRent.customexceptions.PermissionDenyException;
 import com.javaweb.WebsiteRoomForRent.dtos.UserDTO;
 import com.javaweb.WebsiteRoomForRent.entities.Role;
+import com.javaweb.WebsiteRoomForRent.entities.TokenEntity;
 import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
 import com.javaweb.WebsiteRoomForRent.repository.RoleRepository;
+import com.javaweb.WebsiteRoomForRent.repository.TokenRepository;
 import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
 import com.javaweb.WebsiteRoomForRent.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
 
     @Override
@@ -75,5 +77,16 @@ public class UserServiceImpl implements UserService {
         //authenticate with Java Spring security
         authenticationManager.authenticate(authenticationToken);
         return jwtTokenUtil.generateToken(existingUser);
+    }
+
+    @Override
+    public void revokeToken(String token) {
+        TokenEntity tokenEntity = tokenRepository.findByToken(token).orElse(null);
+        if (tokenEntity != null) {
+            tokenEntity.setRevoked(true); // Đánh dấu token là đã bị thu hồi
+            tokenRepository.save(tokenEntity);
+        } else {
+            throw new DataNotFoundException("Token not found");
+        }
     }
 }

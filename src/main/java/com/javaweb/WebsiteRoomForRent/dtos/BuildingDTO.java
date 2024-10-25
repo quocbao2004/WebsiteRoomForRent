@@ -39,37 +39,37 @@ public class BuildingDTO {
     @NotNull(message = "Building's floor area can't be null")
     private Long floorArea;
 
-    @NotNull(message = "Building's managerName can't be null")
-    @NotBlank(message = "Building's managerName can't be blank")
+//    @NotNull(message = "Building's managerName can't be null")
+//    @NotBlank(message = "Building's managerName can't be blank")
     private String managerName;
 
-    @NotNull(message = "Building's managerphone can't be null")
-    @NotBlank(message = "Building's managerphone can't be blank")
+//    @NotNull(message = "Building's managerphone can't be null")
+//    @NotBlank(message = "Building's managerphone can't be blank")
     private String managerphone;
 
-    @NotNull(message = "Building's rentPrice can't be null")
+//    @NotNull(message = "Building's rentPrice can't be null")
     private Long rentPrice;
 
-    @NotNull(message = "Building's servicefee can't be null")
+//    @NotNull(message = "Building's servicefee can't be null")
     private Long servicefee;
 
-    @NotNull(message = "Building's carfee can't be null")
+//    @NotNull(message = "Building's carfee can't be null")
     private Long carfee;
 
-    @NotNull(message = "Building's motofee can't be null")
+//    @NotNull(message = "Building's motofee can't be null")
     private  Long motofee;
 
-    @NotNull(message = "Building's waterfee can't be null")
+//    @NotNull(message = "Building's waterfee can't be null")
     private Long waterfee;
 
-    @NotNull(message = "Building's electricityfee can't be null")
+//    @NotNull(message = "Building's electricityfee can't be null")
     private Long electricityfee;
 
-    @NotNull(message = "Building's deposit can't be null")
-    @NotBlank(message = "Building's deposit can't be blank")
+//    @NotNull(message = "Building's deposit can't be null")
+//    @NotBlank(message = "Building's deposit can't be blank")
     private String deposit;
 
-    @NotNull(message = "Building's number of available rooms can't be null")
+//    @NotNull(message = "Building's number of available rooms can't be null")
     private Long totalNumberOfAvailableRooms;
 
     private String description;

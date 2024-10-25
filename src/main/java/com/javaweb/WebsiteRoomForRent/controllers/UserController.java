@@ -2,26 +2,37 @@ package com.javaweb.WebsiteRoomForRent.controllers;
 
 import com.javaweb.WebsiteRoomForRent.dtos.UserDTO;
 import com.javaweb.WebsiteRoomForRent.dtos.UserLoginDTO;
+import com.javaweb.WebsiteRoomForRent.entities.TokenEntity;
 import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
+import com.javaweb.WebsiteRoomForRent.repository.TokenRepository;
+import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
+import com.javaweb.WebsiteRoomForRent.requests.TokenRequest;
 import com.javaweb.WebsiteRoomForRent.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.apache.catalina.util.Introspection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("${api.prefix}/users")
+@Transactional
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
+    private final TokenRepository tokenRepository;
+    private final UserRepository userRepository;
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
@@ -51,10 +62,44 @@ public class UserController {
         // Kiểm tra thông tin đăng nhập và sinh token
         try {
             String token = userService.login(userLoginDTO.getPhone(), userLoginDTO.getPassword());
+            TokenEntity tokenEntity = new TokenEntity();
+            tokenEntity.setToken(token);
+            tokenEntity.setExpired(false);
+            tokenEntity.setTokenType("Bearer");
+            tokenEntity.setUser(userRepository.findById(2L).get());
+            LocalDateTime expirationDate = LocalDateTime.now().plusDays(30);
+            tokenEntity.setExpirationDate(LocalDateTime.parse(expirationDate.toString()));
+            tokenRepository.save(tokenEntity);
             // Trả về token trong response
             return ResponseEntity.ok(token);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestBody TokenRequest tokenRequest) {
+        try {
+            // Tìm token trong cơ sở dữ liệu
+            Optional<TokenEntity> optionalTokenEntity = tokenRepository.findByToken(tokenRequest.getToken());
+
+            // Kiểm tra xem token có tồn tại không
+            if (optionalTokenEntity.isPresent()) {
+                TokenEntity tokenEntity = optionalTokenEntity.get();
+
+                // Đánh dấu token là đã thu hồi
+                tokenEntity.setRevoked(true); // Đánh dấu token là đã bị thu hồi
+                tokenEntity.setExpired(true);  // Có thể cập nhật thành true nếu bạn muốn
+                tokenRepository.save(tokenEntity); // Lưu lại thay đổi
+
+                // Trả về phản hồi thành công
+                return ResponseEntity.ok("Logout successful");
+            } else {
+                return ResponseEntity.badRequest().body("Token not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Logout failed: " + e.getMessage());
+        }
+    }
+
+
 }

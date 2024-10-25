@@ -6,4 +6,5 @@ import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
 public interface UserService {
     UserEntity createUser(UserDTO userDTO) throws Exception;
     String login(String phoneNumber, String password) throws Exception;
+    void revokeToken(String token);
 }
