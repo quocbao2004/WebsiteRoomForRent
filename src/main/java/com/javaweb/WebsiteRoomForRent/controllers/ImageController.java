@@ -21,11 +21,11 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @Transactional
 @RestController
 @RequestMapping("/${api.prefix}/image")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class ImageController {
 
     private final ImageService imageService;

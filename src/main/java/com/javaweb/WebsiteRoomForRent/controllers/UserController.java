@@ -1,5 +1,7 @@
 package com.javaweb.WebsiteRoomForRent.controllers;
 
+import com.javaweb.WebsiteRoomForRent.components.JwtTokenUtil;
+import com.javaweb.WebsiteRoomForRent.dtos.PasswordDTO;
 import com.javaweb.WebsiteRoomForRent.dtos.UserDTO;
 import com.javaweb.WebsiteRoomForRent.dtos.UserLoginDTO;
 import com.javaweb.WebsiteRoomForRent.entities.TokenEntity;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.catalina.util.Introspection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -33,6 +36,7 @@ public class UserController {
     private final UserService userService;
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
+    private final JwtTokenUtil jwt;
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
@@ -55,7 +59,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage()); //rule 5
         }
     }
-
     @PostMapping("/login")
     public ResponseEntity<String> login(
             @Valid @RequestBody UserLoginDTO userLoginDTO) {
@@ -79,19 +82,12 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestBody TokenRequest tokenRequest) {
         try {
-            // Tìm token trong cơ sở dữ liệu
             Optional<TokenEntity> optionalTokenEntity = tokenRepository.findByToken(tokenRequest.getToken());
-
-            // Kiểm tra xem token có tồn tại không
             if (optionalTokenEntity.isPresent()) {
                 TokenEntity tokenEntity = optionalTokenEntity.get();
-
-                // Đánh dấu token là đã thu hồi
-                tokenEntity.setRevoked(true); // Đánh dấu token là đã bị thu hồi
-                tokenEntity.setExpired(true);  // Có thể cập nhật thành true nếu bạn muốn
-                tokenRepository.save(tokenEntity); // Lưu lại thay đổi
-
-                // Trả về phản hồi thành công
+                tokenEntity.setRevoked(true);
+                tokenEntity.setExpired(true);
+                tokenRepository.save(tokenEntity);
                 return ResponseEntity.ok("Logout successful");
             } else {
                 return ResponseEntity.badRequest().body("Token not found");
@@ -101,5 +97,28 @@ public class UserController {
         }
     }
 
+    @PostMapping("edit-user")
+    public ResponseEntity<String>editUser(@Valid @RequestBody UserDTO userDTO, BindingResult result){
+        try {
+                userService.editProfile(userDTO);
+                return ResponseEntity.ok("ok");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Edit failed: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("change-password")
+    public ResponseEntity<String>changePassword(@Valid @RequestBody PasswordDTO passwordDTO, BindingResult result){
+        try {
+            UserEntity user  = userRepository.findById(passwordDTO.getId()).get();
+            if(user.getUsername().equals(passwordDTO.getUsername())){
+                return ResponseEntity.ok(userService.changePassword(passwordDTO, user));
+            } else {
+                return ResponseEntity.badRequest().body("Username not match");
+            }
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Edit failed: " + e.getMessage());
+        }
+    }
 
 }

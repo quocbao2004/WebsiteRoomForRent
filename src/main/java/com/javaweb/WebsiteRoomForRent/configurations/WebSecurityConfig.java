@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
                     requests
+
                             .requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
                                     String.format("%s/users/login", apiPrefix)
@@ -41,6 +42,8 @@ public class WebSecurityConfig {
                             .permitAll()
                             .requestMatchers(GET,
                                     String.format("%s/building/**", apiPrefix)).permitAll()
+                            .requestMatchers(POST,
+                                    String.format("%s/customer/**", apiPrefix)).permitAll()
                             .requestMatchers(GET,
                                     String.format("%s/image/**", apiPrefix)).permitAll()
                             .requestMatchers(POST,
@@ -51,8 +54,6 @@ public class WebSecurityConfig {
                                     String.format("%s/building/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(GET,
                                     String.format("%s/customer**", apiPrefix)).hasAnyRole(Role.ADMIN)
-                            .requestMatchers(POST,
-                                    String.format("%s/customer/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(PUT,
                                     String.format("%s/customer/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(DELETE,

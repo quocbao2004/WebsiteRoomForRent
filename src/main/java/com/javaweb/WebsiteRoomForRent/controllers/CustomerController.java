@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
 
+@CrossOrigin(origins = "*")
 @Transactional
 @RestController
 @RequestMapping("${api.prefix}/customer")

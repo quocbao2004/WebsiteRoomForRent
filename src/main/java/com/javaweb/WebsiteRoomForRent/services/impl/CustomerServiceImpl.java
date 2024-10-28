@@ -40,6 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
             UserEntity userEntity = userRepository.findByPhone("0865479500").get();
             customerEntity.setUserid(userEntity);
+            customerEntity.setStatus("CHUA_XU_LY");
             customerRepository.save(customerEntity);
         } else {
 

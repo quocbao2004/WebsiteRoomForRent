@@ -31,6 +31,9 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "demand")
     private String demand;
 
+    @Column (name = "status")
+    private String status;
+
     @ManyToOne
     @JoinColumn(name ="userid")
     private UserEntity userid;
