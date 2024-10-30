@@ -44,6 +44,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name ="address")
     private String address;
 
+    @OneToOne(mappedBy = "user")
+    private ForgotPassEntity forgotPassEntity;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

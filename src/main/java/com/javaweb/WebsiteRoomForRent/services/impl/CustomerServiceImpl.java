@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void addNewCustomer(CustomerDTO customerDTO){
         if(customerDTO.getId() == null) {
             CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
-            UserEntity userEntity = userRepository.findByPhone("0865479500").get();
+            UserEntity userEntity = userRepository.findByPhone("0815201104").get();
             customerEntity.setUserid(userEntity);
             customerRepository.save(customerEntity);
         } else {

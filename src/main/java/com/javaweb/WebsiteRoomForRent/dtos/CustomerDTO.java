@@ -11,19 +11,12 @@ import lombok.*;
 @NoArgsConstructor
 public class CustomerDTO {
 
-    @NotNull(message = "Building's id can't be null")
     private Integer id;
 
-    @NotNull(message = "Building's name can't be null")
-    @NotBlank(message = "Building's name can't be blank")
     private String fullName;
 
-    @NotNull(message = "Building's name can't be null")
-    @NotBlank(message = "Building's name can't be blank")
     private String phone;
 
-    @NotNull(message = "Building's name can't be null")
-    @NotBlank(message = "Building's name can't be blank")
     private String email;
 
     private String demand;

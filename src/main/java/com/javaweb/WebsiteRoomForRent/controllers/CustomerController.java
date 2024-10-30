@@ -5,6 +5,7 @@ import com.javaweb.WebsiteRoomForRent.repository.CustomerRepository;
 import com.javaweb.WebsiteRoomForRent.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
@@ -12,6 +13,7 @@ import java.net.http.HttpResponse;
 @RestController
 @RequestMapping("${api.prefix}/customer")
 @CrossOrigin(origins = "*")
+@Transactional
 public class CustomerController {
     @Autowired
     private CustomerService customerService;

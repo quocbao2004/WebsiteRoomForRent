@@ -36,7 +36,9 @@ public class WebSecurityConfig {
                     requests
                             .requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
-                                    String.format("%s/users/login", apiPrefix)
+                                    String.format("%s/users/login", apiPrefix),
+                                    String.format("%s/password/**", apiPrefix),
+                                    String.format("%s/customer/add-customer", apiPrefix)
                             )
                             .permitAll()
                             .requestMatchers(GET,
@@ -51,8 +53,6 @@ public class WebSecurityConfig {
                                     String.format("%s/building/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(GET,
                                     String.format("%s/customer**", apiPrefix)).hasAnyRole(Role.ADMIN)
-                            .requestMatchers(POST,
-                                    String.format("%s/customer/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(PUT,
                                     String.format("%s/customer/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(DELETE,
@@ -61,6 +61,8 @@ public class WebSecurityConfig {
                                     String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(DELETE,
                                     String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
+                            .requestMatchers(POST,
+                                    String.format("%s/users/logout", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .anyRequest().authenticated();
                 });
         return http.build();

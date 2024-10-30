@@ -2,7 +2,10 @@ package com.javaweb.WebsiteRoomForRent.controllers;
 
 import com.javaweb.WebsiteRoomForRent.dtos.UserDTO;
 import com.javaweb.WebsiteRoomForRent.dtos.UserLoginDTO;
+import com.javaweb.WebsiteRoomForRent.entities.TokenEntity;
 import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
+import com.javaweb.WebsiteRoomForRent.repository.TokenRepository;
+import com.javaweb.WebsiteRoomForRent.requests.TokenRequest;
 import com.javaweb.WebsiteRoomForRent.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,6 +27,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final TokenRepository tokenRepository;
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
@@ -43,6 +48,24 @@ public class UserController {
         }
         catch (Exception ex){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage()); //rule 5
+        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestBody TokenRequest tokenRequest) {
+        try {
+            Optional<TokenEntity> optionalTokenEntity = tokenRepository.findByToken(tokenRequest.getToken());
+            if (optionalTokenEntity.isPresent()) {
+                TokenEntity tokenEntity = optionalTokenEntity.get();
+                tokenEntity.setRevoked(true);
+                tokenEntity.setExpired(true);
+                tokenRepository.save(tokenEntity);
+                return ResponseEntity.ok("Logout successful");
+            } else {
+                return ResponseEntity.badRequest().body("Token not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Logout failed: " + e.getMessage());
         }
     }
 
