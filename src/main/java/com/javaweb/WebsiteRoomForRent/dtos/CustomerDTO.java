@@ -18,4 +18,5 @@ public class CustomerDTO {
     private String email;
     private String demand;
     private String status;
+    private Long isActive;
 }

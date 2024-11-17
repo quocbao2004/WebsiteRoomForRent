@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -30,11 +31,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)  throws Exception{
         http
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
                     requests
-
                             .requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
                                     String.format("%s/users/login", apiPrefix)
@@ -62,7 +63,7 @@ public class WebSecurityConfig {
                                     String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(DELETE,
                                     String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
-                            .requestMatchers(DELETE,
+                            .requestMatchers(POST,
                                     String.format("%s/users/logout", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .anyRequest().authenticated();
                 });

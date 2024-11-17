@@ -10,6 +10,8 @@ import com.javaweb.WebsiteRoomForRent.services.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +43,14 @@ public class CustomerServiceImpl implements CustomerService {
             UserEntity userEntity = userRepository.findByPhone("0865479500").get();
             customerEntity.setUserid(userEntity);
             customerEntity.setStatus("CHUA_XU_LY");
+            customerEntity.setIsActive(1L);
             customerRepository.save(customerEntity);
-        } else {
-
         }
+    }
+
+    @Override
+    public void DeleteCustomer(Long id){
+        CustomerEntity customer = customerRepository.findById(id).get();
+        customer.setIsActive(0L);
     }
 }

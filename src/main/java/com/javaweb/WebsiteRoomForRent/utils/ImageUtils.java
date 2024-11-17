@@ -33,7 +33,7 @@ public class ImageUtils {
 
     // Kiểm tra kích thước file
     public static boolean isImageTooLarge(MultipartFile file) {
-        if(file.getSize() > 10 * 1024 * 1024) return true; // Kích thước > 10MB
+        if(file.getSize() > 100 * 1024 * 1024) return true; // Kích thước > 10MB
         return false;
     }
 

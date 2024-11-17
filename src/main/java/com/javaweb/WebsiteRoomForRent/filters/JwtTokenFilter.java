@@ -15,12 +15,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -40,6 +42,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response); //enable bypass
                 return;
             }
+
             final String authHeader = request.getHeader("Authorization");
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
@@ -67,15 +70,22 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final List<Pair<String, String>> bypassTokens = Arrays.asList(
                 Pair.of(String.format("%s/users/register", apiPrefix), "POST"),
                 Pair.of(String.format("%s/users/login", apiPrefix), "POST"),
+                Pair.of(String.format("%s/users/login", apiPrefix), "OPTIONS"),
                 Pair.of(String.format("%s/building", apiPrefix), "GET"),
                 Pair.of(String.format("%s/image", apiPrefix), "GET"),
                 Pair.of(String.format("%s/customer/add-customer", apiPrefix), "POST")
         );
+
         for(Pair<String, String> bypassToken: bypassTokens) {
             if (request.getServletPath().contains(bypassToken.getFirst())
                     && request.getMethod().equals(bypassToken.getSecond())) {
                     return true;
             }
+//            else {
+//                System.out.println("get second: " + bypassToken.getSecond());
+//                System.out.println("get first: " + bypassToken.getFirst());
+//                System.out.println("get request method: " +request.getMethod());
+//            }
         }
         return false;
     }

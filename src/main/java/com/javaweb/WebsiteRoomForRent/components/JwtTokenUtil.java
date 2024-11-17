@@ -11,7 +11,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +22,7 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JwtTokenUtil {
     @Value("${jwt.expiration}")
-    private int expiration; // Thời gian hết hạn token (giây)
+    private int expiration;
 
     @Value("${jwt.secretKey}")
     private String secretKey;
@@ -80,13 +79,10 @@ public class JwtTokenUtil {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         String phoneNumber = extractPhoneNumber(token);
-
         Optional<TokenEntity> optionalTokenEntity = tokenRepository.findByToken(token);
-
         if (optionalTokenEntity.isEmpty() || optionalTokenEntity.get().isRevoked()) {
             return false;
         }
-
         return (phoneNumber.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 

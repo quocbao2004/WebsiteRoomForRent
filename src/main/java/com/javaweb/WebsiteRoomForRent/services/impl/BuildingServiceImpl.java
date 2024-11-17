@@ -32,6 +32,10 @@ public class BuildingServiceImpl implements BuildingService {
     public BuildingDTO createOrUpdateBuilding(BuildingDTO buildingDTO) {
         BuildingEntity building = buildingConverter.toBuildingEntity(buildingDTO);
         UserEntity user = userRepository.findById(2L).get();
+        if(buildingDTO.getId() != null) {
+            BuildingEntity existBuilding = buildingRepo.findById(buildingDTO.getId()).get();
+            building.setImages(existBuilding.getImages());
+        }
         building.setUserid(user);
         buildingRepo.save(building);
         buildingDTO.setId(building.getId());

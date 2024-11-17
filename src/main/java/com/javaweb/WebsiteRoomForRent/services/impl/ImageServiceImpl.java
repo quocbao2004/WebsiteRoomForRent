@@ -22,7 +22,7 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
     private final BuildingRepository buildingRepository;
 
-    public static final String STORAGE_DIRECTORY = "D:\\My_projects\\WebsiteRoomForRent\\images";
+    public static final String STORAGE_DIRECTORY = "D:\\Workspace\\Project\\WebsieRoomForRent_NguyenKhang\\WebsiteRoomForRent\\images";
 
     @Override
     public ImageEntity createBuildingImage(Long buildingId, ImageDTO imageDTO) {

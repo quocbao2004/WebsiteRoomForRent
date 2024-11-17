@@ -11,6 +11,7 @@ import com.javaweb.WebsiteRoomForRent.services.ImageService;
 import com.javaweb.WebsiteRoomForRent.utils.ImageUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class BuildingController {
+//    @Value("${base.url.frontend}")
+//    private String frontendUrl;
 
     private final BuildingService buildingService;
     private final BuildingConverter buildingConverter;

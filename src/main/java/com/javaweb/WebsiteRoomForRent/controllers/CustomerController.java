@@ -17,8 +17,6 @@ import java.net.http.HttpResponse;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @GetMapping
     public ResponseEntity<?> getCustomer() {
@@ -30,6 +28,16 @@ public class CustomerController {
         try {
             customerService.addNewCustomer(customerDTO);
             return ResponseEntity.ok("Customer added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete-customer/{id}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
+        try {
+            customerService.DeleteCustomer(id);
+            return ResponseEntity.ok("Customer deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
