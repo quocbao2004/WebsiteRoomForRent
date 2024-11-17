@@ -66,9 +66,9 @@ public class WebSecurityConfig {
                                     String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(POST,
                                     String.format("%s/users/edit-user", apiPrefix)).hasAnyRole(Role.ADMIN)
-                            .requestMatchers(POST,
-                                    String.format("%s/users/get-user", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(GET,
+                                    String.format("%s/users/get-user", apiPrefix)).hasAnyRole(Role.ADMIN)
+                            .requestMatchers(POST,
                                     String.format("%s/users/logout", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .anyRequest().authenticated();
                 });
