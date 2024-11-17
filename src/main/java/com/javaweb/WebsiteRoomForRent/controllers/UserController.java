@@ -81,4 +81,13 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-}
+
+    @PostMapping("/edit-user")
+    public ResponseEntity<String>editUser(@Valid @RequestBody UserDTO userDTO, BindingResult result){
+        try {
+//            userService.editProfile(userDTO);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Edit failed: " + e.getMessage());
+        }
+    }}

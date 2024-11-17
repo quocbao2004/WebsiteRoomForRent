@@ -5,6 +5,7 @@ import com.javaweb.WebsiteRoomForRent.dtos.BuildingDTO;
 import com.javaweb.WebsiteRoomForRent.entities.BuildingEntity;
 import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
 import com.javaweb.WebsiteRoomForRent.repository.BuildingRepository;
+import com.javaweb.WebsiteRoomForRent.repository.ImageRepository;
 import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
 import com.javaweb.WebsiteRoomForRent.requests.BuildingSearchRequests;
 import com.javaweb.WebsiteRoomForRent.responses.BuildingSearchResponse;
@@ -21,6 +22,7 @@ public class BuildingServiceImpl implements BuildingService {
     private final BuildingRepository buildingRepo;
     private final BuildingConverter buildingConverter;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
 
     @Override
     public List<BuildingSearchResponse> searchBuilding(BuildingSearchRequests buildingSearchRequests) {
@@ -33,6 +35,9 @@ public class BuildingServiceImpl implements BuildingService {
         BuildingEntity building = buildingConverter.toBuildingEntity(buildingDTO);
         UserEntity user = userRepository.findById(1L).get();
         building.setUserid(user);
+        if(buildingDTO.getId() != null) {
+            building.setImages(imageRepository.findByBuildingId(buildingDTO.getId()));
+        }
         buildingRepo.save(building);
         buildingDTO.setId(building.getId());
         return buildingDTO;
