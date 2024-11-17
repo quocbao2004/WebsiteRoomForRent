@@ -121,4 +121,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("get-user")
+    public ResponseEntity<String>getUser(@RequestParam Long id){
+        try {
+            UserEntity user = userRepository.findById(id).get();
+            return ResponseEntity.ok("Ok");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Get failed: " + e.getMessage());
+        }
+    }
+
 }
