@@ -39,7 +39,10 @@ public class BuildingConverter {
         buildingSearchRequests.setRentPriceFrom(buildingSearchRequestUtil.getObject(mp.get("rentPriceFrom"), Long.class));
         buildingSearchRequests.setRentPriceTo(buildingSearchRequestUtil.getObject(mp.get("rentPriceTo"), Long.class));
 
-        buildingSearchRequests.setType((mp.get("type") != "" ? Arrays.asList(mp.get("type").toString().split(",")) : null));
+        if(mp.get("type") != null && !mp.get("type").equals("")) {
+            buildingSearchRequests.setType(Arrays.asList(mp.get("type").toString().split(",")));
+        }
+        else buildingSearchRequests.setType(null);
         return buildingSearchRequests;
     }
 

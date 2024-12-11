@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.util.Date;
 
+
 @Data //toString
 @Builder
 @Setter
@@ -14,12 +15,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    private Long id;
+    private String email;
+    private String address;
+
     @JsonProperty("fullname")
     private String fullname;
 
     @JsonProperty("phone")
     @NotBlank(message = "Phone number is required")
-    private String phoneNumber;
+    private String phone;
 
     @NotBlank(message = "Password can not be blank")
     private String password;

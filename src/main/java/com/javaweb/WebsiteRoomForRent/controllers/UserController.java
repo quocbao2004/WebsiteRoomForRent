@@ -1,10 +1,12 @@
 package com.javaweb.WebsiteRoomForRent.controllers;
 
+import com.javaweb.WebsiteRoomForRent.dtos.PasswordDTO;
 import com.javaweb.WebsiteRoomForRent.dtos.UserDTO;
 import com.javaweb.WebsiteRoomForRent.dtos.UserLoginDTO;
 import com.javaweb.WebsiteRoomForRent.entities.TokenEntity;
 import com.javaweb.WebsiteRoomForRent.entities.UserEntity;
 import com.javaweb.WebsiteRoomForRent.repository.TokenRepository;
+import com.javaweb.WebsiteRoomForRent.repository.UserRepository;
 import com.javaweb.WebsiteRoomForRent.requests.TokenRequest;
 import com.javaweb.WebsiteRoomForRent.services.UserService;
 import jakarta.validation.Valid;
@@ -28,6 +30,17 @@ public class UserController {
 
     private final UserService userService;
     private final TokenRepository tokenRepository;
+    private final UserRepository userRepository;
+
+    @GetMapping("/get-user")
+    public ResponseEntity<String>getUser(@RequestParam Long id){
+        try {
+            UserEntity user = userRepository.findById(id).get();
+            return ResponseEntity.ok("Ok");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Get failed: " + e.getMessage());
+        }
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
@@ -79,6 +92,20 @@ public class UserController {
             return ResponseEntity.ok(token);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<String>changePassword(@Valid @RequestBody PasswordDTO passwordDTO, BindingResult result){
+        try {
+            UserEntity user  = userRepository.findById(passwordDTO.getId()).get();
+            if(user.getUsername().equals(passwordDTO.getUsername())){
+                return ResponseEntity.ok(userService.changePassword(passwordDTO, user));
+            } else {
+                return ResponseEntity.badRequest().body("Username not match");
+            }
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Edit failed: " + e.getMessage());
         }
     }
 

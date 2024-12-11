@@ -38,7 +38,8 @@ public class WebSecurityConfig {
                                     String.format("%s/users/register", apiPrefix),
                                     String.format("%s/users/login", apiPrefix),
                                     String.format("%s/password/**", apiPrefix),
-                                    String.format("%s/customer/add-customer", apiPrefix)
+                                    String.format("%s/customer/add-customer", apiPrefix),
+                                    String.format("%s/users/forgot-password", apiPrefix)
                             )
                             .permitAll()
                             .requestMatchers(GET,
@@ -65,6 +66,10 @@ public class WebSecurityConfig {
                                     String.format("%s/users/logout", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(POST,
                                     String.format("%s/users/edit-user", apiPrefix)).hasAnyRole(Role.ADMIN)
+                            .requestMatchers(GET,
+                                    String.format("%s/users/get-user", apiPrefix)).hasAnyRole(Role.ADMIN)
+                            .requestMatchers(POST,
+                                    String.format("%s/users/change-password", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .anyRequest().authenticated();
                 });
         return http.build();

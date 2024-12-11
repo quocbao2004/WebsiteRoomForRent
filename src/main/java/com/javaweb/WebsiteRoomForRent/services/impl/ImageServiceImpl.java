@@ -54,6 +54,10 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public String deleteBuildingImage(String fileName) {
         imageRepository.deleteByImageUrl(fileName);
-        return "Delete Building Image " + fileName + " Successful";
+        File file = new File(STORAGE_DIRECTORY + File.separator + fileName);
+        if(file.delete()) {
+            return "Image deleted successfully";
+        }
+        else return "Image could not be deleted";
     }
 }
