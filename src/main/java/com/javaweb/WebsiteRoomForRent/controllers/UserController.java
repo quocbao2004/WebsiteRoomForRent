@@ -23,7 +23,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -97,17 +99,17 @@ public class UserController {
         }
     }
 
-    @PostMapping("edit-user")
-    public ResponseEntity<String>editUser(@Valid @RequestBody UserDTO userDTO, BindingResult result){
-        try {
-                userService.editProfile(userDTO);
-                return ResponseEntity.ok("ok");
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body("Edit failed: " + e.getMessage());
-        }
+    @PostMapping("/edit-user")
+    public ResponseEntity<Map<String, String>> editProfile(@RequestBody UserDTO userDTO) throws Exception {
+        String newToken = userService.editProfile(userDTO);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Profile updated successfully.");
+        response.put("token", newToken);
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("change-password")
+
+    @PostMapping("/change-password")
     public ResponseEntity<String>changePassword(@Valid @RequestBody PasswordDTO passwordDTO, BindingResult result){
         try {
             UserEntity user  = userRepository.findById(passwordDTO.getId()).get();
@@ -121,14 +123,29 @@ public class UserController {
         }
     }
 
-    @GetMapping("get-user")
-    public ResponseEntity<String>getUser(@RequestParam Long id){
+    @GetMapping("/get-user")
+    public ResponseEntity<?>getUser(@RequestParam Long id){ // chỗ này t sửa ResponseEntity<String> thành ResponseEntity<?>
         try {
-            UserEntity user = userRepository.findById(id).get();
-            return ResponseEntity.ok("Ok");
+            UserDTO userDTO = userService.getUser(id);
+            return ResponseEntity.ok(userDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Get failed: " + e.getMessage());
         }
+    }
+
+    @GetMapping("check-username")
+    public ResponseEntity<?> checkUsername(@RequestParam String username) {
+        try {
+            String getUsername = userRepository.findByPhone(username).get().getUsername();
+            if (getUsername.equals(username)) {
+                Map<String, String> response = new HashMap<>();
+                response.put("username", getUsername);
+                return ResponseEntity.ok(response); // Return a JSON object
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Get failed: " + e.getMessage());
+        }
+        return ResponseEntity.badRequest().body("Get failed");
     }
 
 }

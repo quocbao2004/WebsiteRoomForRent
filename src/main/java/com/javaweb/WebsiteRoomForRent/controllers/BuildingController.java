@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class BuildingController {
-//    @Value("${base.url.frontend}")
-//    private String frontendUrl;
 
     private final BuildingService buildingService;
     private final BuildingConverter buildingConverter;
@@ -73,4 +71,14 @@ public class BuildingController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/count")
+    public ResponseEntity countBuildings() {
+        try {
+            long count = buildingService.countBuildings();
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

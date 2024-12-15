@@ -12,4 +12,5 @@ public class CustomerSearchResponse {
     private String fullname;
     private String phone;
     private String email;
+    private String demand;
 }

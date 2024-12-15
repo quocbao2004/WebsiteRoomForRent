@@ -12,4 +12,5 @@ public interface BuildingService {
     BuildingDTO createOrUpdateBuilding(BuildingDTO buildingDTO);
     String deleteBuilding(Long id);
     BuildingEntity getBuildingById(Long buildingId);
+    long countBuildings();
 }

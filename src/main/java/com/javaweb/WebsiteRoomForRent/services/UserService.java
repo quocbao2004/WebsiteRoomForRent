@@ -9,5 +9,6 @@ public interface UserService {
     String login(String phoneNumber, String password) throws Exception;
     void revokeToken(String token);
     String changePassword(PasswordDTO password, UserEntity user) throws Exception;
-    void editProfile(UserDTO userDTO) throws Exception;
+    String editProfile(UserDTO userDTO) throws Exception;
+    UserDTO getUser(Long id);
 }

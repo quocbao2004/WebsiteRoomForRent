@@ -34,8 +34,8 @@ public class CustomerEntity extends BaseEntity {
     @Column (name = "status")
     private String status;
 
-    @Column (name="isActive")
-    private Long isActive;
+    @Column (name="is_active")
+    private int isActive;
 
     @ManyToOne
     @JoinColumn(name ="userid")

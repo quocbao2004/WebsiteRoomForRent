@@ -9,4 +9,5 @@ public interface CustomerService {
     List<CustomerSearchResponse> findAllCustomer();
     void addNewCustomer(CustomerDTO customerDTO);
     void DeleteCustomer(Long id);
+    long countCustomers();
 }

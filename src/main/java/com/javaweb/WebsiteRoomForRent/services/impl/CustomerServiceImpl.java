@@ -28,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerSearchResponse> findAllCustomer(){
-        List<CustomerEntity> customerEntityList = customerRepository.findAll();
+        List<CustomerEntity> customerEntityList = customerRepository.findAllByIsActive(1);
         List<CustomerSearchResponse> customerSearchResponseList = new ArrayList<>();
         for (CustomerEntity customerEntity : customerEntityList) {
             customerSearchResponseList.add(modelMapper.map(customerEntity, CustomerSearchResponse.class));
@@ -40,10 +40,11 @@ public class CustomerServiceImpl implements CustomerService {
     public void addNewCustomer(CustomerDTO customerDTO){
         if(customerDTO.getId() == null) {
             CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
-            UserEntity userEntity = userRepository.findByPhone("0865479500").get();
+
+            UserEntity userEntity = userRepository.findById(2L).get();
             customerEntity.setUserid(userEntity);
             customerEntity.setStatus("CHUA_XU_LY");
-            customerEntity.setIsActive(1L);
+            customerEntity.setIsActive(1);
             customerRepository.save(customerEntity);
         }
     }
@@ -51,6 +52,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void DeleteCustomer(Long id){
         CustomerEntity customer = customerRepository.findById(id).get();
-        customer.setIsActive(0L);
+        customer.setIsActive(0);
+    }
+
+    @Override
+    public long countCustomers() {
+        return customerRepository.count();
     }
 }

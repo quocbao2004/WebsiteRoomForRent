@@ -52,4 +52,9 @@ public class BuildingServiceImpl implements BuildingService {
     public BuildingEntity getBuildingById(Long buildingId) {
         return buildingRepo.findById(buildingId).get();
     }
+
+    @Override
+    public long countBuildings() {
+        return buildingRepo.count();
+    }
 }

@@ -20,7 +20,7 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<?> getCustomer() {
-        return ResponseEntity.ok(customerService.findAllCustomer());
+            return ResponseEntity.ok(customerService.findAllCustomer());
     }
 
     @PostMapping("/add-customer")
@@ -40,6 +40,16 @@ public class CustomerController {
             return ResponseEntity.ok("Customer deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> countCustomers() {
+        try {
+            long count = customerService.countCustomers();
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
         }
     }
 }

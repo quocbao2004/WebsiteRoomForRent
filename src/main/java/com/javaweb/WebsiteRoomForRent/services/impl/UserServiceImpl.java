@@ -20,6 +20,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -37,12 +39,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity createUser(UserDTO userDTO) throws Exception {
         //register user
-        String phoneNumber = userDTO.getPhone();
-        Role role = roleRepository.findById(userDTO.getRoleId())
-                .orElseThrow(() -> new DataNotFoundException("Role not found")).getRole();
-        if(role.getName().toUpperCase().equals(Role.ADMIN)) {
-            throw new PermissionDenyException("You cannot register an admin account");
-        }
+//        String phone = userDTO.getPhone();
+        Role role = new Role();
+        role.setId(1L);
+        role.setName("ADMIN");
+
+//        if(role.getName().toUpperCase().equals(Role.ADMIN)) {
+//            throw new PermissionDenyException("You cannot register an admin account");
+//        }
         //convert from userDTO => userEntity
         UserEntity newUser = UserEntity.builder()
                 .fullname(userDTO.getFullname())
@@ -69,7 +73,7 @@ public class UserServiceImpl implements UserService {
         UserEntity existingUser = optionalUser.get();
         //check password
         if(!passwordEncoder.matches(password, existingUser.getPassword())) {
-            throw new BadCredentialsException("Wrong phone number or password");
+                throw new BadCredentialsException("Wrong phone number or password");
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -113,8 +117,9 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public void editProfile(UserDTO userDTO) throws Exception{
+    public String editProfile(UserDTO userDTO) throws Exception{
         UserEntity user = userRepository.findById(userDTO.getId()).get();
+
         if (userDTO.getEmail() != null && !userDTO.getEmail().isEmpty()) {
             user.setEmail(userDTO.getEmail());
         }
@@ -128,8 +133,39 @@ public class UserServiceImpl implements UserService {
         if (userDTO.getAddress() != null && !userDTO.getAddress().isEmpty()) {
             user.setAddress(userDTO.getAddress());
         }
+
+        List<TokenEntity> oldTokens = tokenRepository.findAllByUserAndExpiredEquals(user, false);
+        if (!oldTokens.isEmpty()) {
+            for (TokenEntity oldToken : oldTokens) {
+                oldToken.setRevoked(true);
+                oldToken.setExpired(true);
+            }
+            tokenRepository.saveAll(oldTokens);
+        }
+
+        String newToken = jwtTokenUtil.generateToken(user);
+        TokenEntity tokenEntity = new TokenEntity();
+        tokenEntity.setToken(newToken);
+        tokenEntity.setExpired(false);
+        tokenEntity.setTokenType("Bearer");
+        tokenEntity.setUser(userRepository.findById(2L).get());
+        LocalDateTime expirationDate = LocalDateTime.now().plusDays(30);
+        tokenEntity.setExpirationDate(LocalDateTime.parse(expirationDate.toString()));
+        tokenRepository.save(tokenEntity);
         userRepository.save(user);
+        return newToken;
     }
 
+    @Override
+    public UserDTO getUser(Long id){
+        try {
+            UserEntity user = userRepository.findById(id).get();
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            return userDTO;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new UserDTO();
+        }
+    }
 
 }

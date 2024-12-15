@@ -38,8 +38,14 @@ public class WebSecurityConfig {
                     requests
                             .requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
+                                    String.format("%s/email/send-email", apiPrefix),
                                     String.format("%s/users/login", apiPrefix),
-                                    String.format("%s/users/change-password", apiPrefix)
+                                    String.format("%s/users/register", apiPrefix),
+                                    String.format("%s/users/check-username", apiPrefix),
+                                    String.format("%s/password-reset/send-otp", apiPrefix),
+                                    String.format("%s/password-reset/validate-otp", apiPrefix),
+                                    String.format("%s/password-reset/reset-password", apiPrefix),
+                                    String.format("%s/users/get-user",apiPrefix)
                             )
                             .permitAll()
                             .requestMatchers(GET,
@@ -66,10 +72,10 @@ public class WebSecurityConfig {
                                     String.format("%s/image/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(POST,
                                     String.format("%s/users/edit-user", apiPrefix)).hasAnyRole(Role.ADMIN)
-                            .requestMatchers(GET,
-                                    String.format("%s/users/get-user", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .requestMatchers(POST,
                                     String.format("%s/users/logout", apiPrefix)).hasAnyRole(Role.ADMIN)
+                            .requestMatchers(POST,
+                                    String.format("%s/users/change-password", apiPrefix)).hasAnyRole(Role.ADMIN)
                             .anyRequest().authenticated();
                 });
         return http.build();

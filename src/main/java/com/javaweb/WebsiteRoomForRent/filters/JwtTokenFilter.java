@@ -69,12 +69,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private boolean isBypassToken(@NonNull  HttpServletRequest request) {
         final List<Pair<String, String>> bypassTokens = Arrays.asList(
                 Pair.of(String.format("%s/users/register", apiPrefix), "POST"),
+                Pair.of(String.format("%s/users/check-username", apiPrefix), "GET"),
+                Pair.of(String.format("%s/users/get-user", apiPrefix), "GET"),
                 Pair.of(String.format("%s/users/login", apiPrefix), "POST"),
                 Pair.of(String.format("%s/users/login", apiPrefix), "OPTIONS"),
                 Pair.of(String.format("%s/building", apiPrefix), "GET"),
                 Pair.of(String.format("%s/image", apiPrefix), "GET"),
                 Pair.of(String.format("%s/customer/add-customer", apiPrefix), "POST"),
-                Pair.of(String.format("%s/user/add-customer", apiPrefix), "POST")
+                Pair.of(String.format("%s/email/send-email", apiPrefix), "GET"),
+                Pair.of(String.format("%s/password-reset/send-otp", apiPrefix), "POST"),
+                Pair.of(String.format("%s/password-reset/validate-otp", apiPrefix), "POST"),
+                Pair.of(String.format("%s/password-reset/reset-password", apiPrefix), "POST")
         );
 
         for(Pair<String, String> bypassToken: bypassTokens) {
@@ -82,11 +87,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     && request.getMethod().equals(bypassToken.getSecond())) {
                     return true;
             }
-//            else {
-//                System.out.println("get second: " + bypassToken.getSecond());
-//                System.out.println("get first: " + bypassToken.getFirst());
-//                System.out.println("get request method: " +request.getMethod());
-//            }
         }
         return false;
     }
