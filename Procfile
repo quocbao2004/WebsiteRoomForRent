@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/room-for-rent-app.jar
+web: java -Dserver.port=$PORT -jar target/WebsiteRoomForRent-0.0.1-SNAPSHOT.jar
