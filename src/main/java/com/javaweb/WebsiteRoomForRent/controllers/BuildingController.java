@@ -1,27 +1,15 @@
 package com.javaweb.WebsiteRoomForRent.controllers;
 
 import com.javaweb.WebsiteRoomForRent.converters.BuildingConverter;
-import com.javaweb.WebsiteRoomForRent.converters.ImageConverter;
 import com.javaweb.WebsiteRoomForRent.dtos.BuildingDTO;
-import com.javaweb.WebsiteRoomForRent.dtos.ImageDTO;
-import com.javaweb.WebsiteRoomForRent.entities.BuildingEntity;
-import com.javaweb.WebsiteRoomForRent.entities.ImageEntity;
 import com.javaweb.WebsiteRoomForRent.services.BuildingService;
-import com.javaweb.WebsiteRoomForRent.services.ImageService;
-import com.javaweb.WebsiteRoomForRent.utils.ImageUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
 import java.util.*;

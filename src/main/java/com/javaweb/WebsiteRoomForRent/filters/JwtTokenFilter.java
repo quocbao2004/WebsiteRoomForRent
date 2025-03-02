@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -79,12 +80,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 Pair.of(String.format("%s/email/send-email", apiPrefix), "GET"),
                 Pair.of(String.format("%s/password-reset/send-otp", apiPrefix), "POST"),
                 Pair.of(String.format("%s/password-reset/validate-otp", apiPrefix), "POST"),
+                Pair.of(String.format("%s/users/register", apiPrefix), "POST"),
                 Pair.of(String.format("%s/password-reset/reset-password", apiPrefix), "POST")
         );
 
         for(Pair<String, String> bypassToken: bypassTokens) {
+            System.out.println("Checking Path: " + request.getServletPath() +
+                    " | Expected Path: " + bypassToken.getFirst());
+            System.out.println("Checking Method: " + request.getMethod() +
+                    " | Expected Method: " + bypassToken.getSecond());
+
             if (request.getServletPath().contains(bypassToken.getFirst())
                     && request.getMethod().equals(bypassToken.getSecond())) {
+
                     return true;
             }
         }

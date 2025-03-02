@@ -17,8 +17,8 @@ public class BuildingSearchRequests {
     private List<String> type;
     private String district;
     private String street;
-    private Long floorAreaFrom;
-    private Long floorAreaTo;
-    private Long rentPriceFrom;
-    private Long rentPriceTo;
+    private Float floorAreaFrom;
+    private Float floorAreaTo;
+    private Float rentPriceFrom;
+    private Float rentPriceTo;
 }

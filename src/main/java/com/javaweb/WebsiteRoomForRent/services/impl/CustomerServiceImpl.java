@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
         if(customerDTO.getId() == null) {
             CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
 
-            UserEntity userEntity = userRepository.findById(2L).get();
+            UserEntity userEntity = userRepository.findById(1L).get();
             customerEntity.setUserid(userEntity);
             customerEntity.setStatus("CHUA_XU_LY");
             customerEntity.setIsActive(1);

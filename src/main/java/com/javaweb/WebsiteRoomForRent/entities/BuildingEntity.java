@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="building")
+@Table(name = "\"building\"")
 @Setter
 @Getter
 @AllArgsConstructor
@@ -47,22 +47,22 @@ public class BuildingEntity extends BaseEntity {
     private String managerphone;
 
     @Column(name ="rentprice")
-    private Long rentPrice;
+    private Float rentPrice;
 
     @Column(name = "servicefee")
-    private Long servicefee;
+    private Float servicefee;
 
     @Column(name = "carfee")
-    private Long carfee;
+    private Float carfee;
 
     @Column(name = "motofee")
-    private  Long motofee;
+    private Float motofee;
 
     @Column(name ="waterfee")
-    private Long waterfee;
+    private Float waterfee;
 
     @Column(name = "electricityfee")
-    private Long electricityfee;
+    private Float electricityfee;
 
 
     @Column(name = "deposit")

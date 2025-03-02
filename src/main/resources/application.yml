@@ -1,77 +1,9 @@
-##server:
-##  port:
-##    8080
-##spring:
-##  mail:
-##    host: smtp.gmail.com
-##    port: 587
-##    username: daoquocbao2k04@gmail.com
-##    password: fydz hfxc bgvn ndri
-##    protocol: smtp
-##    properties:
-##      mail.smtp.auth: true
-##      mail.smtp.starttls.enable: true
-##  servlet:
-##    multipart:
-##      max-file-size: -1
-##      max-request-size: -1
-##  datasource:
-##    url: jdbc:mysql://localhost:3306/websiteroomforrent
-##    username: root
-##    password: Baomax1001.
-##  jpa:
-##    show-sql: true
-##    hibernate:
-##      ddl-auto: update
-##    properties:
-##      hibernate:
-##        ddl-auto: update
-##        dialect: org.hibernate.dialect.MySQL8Dialect
-##      format_sql: true
-##api:
-##  prefix: api
-##jwt:
-##  expiration: 2592000 #30 days = 30 * 24 * 60 * 60
-##  secretKey: XF/TkGiBVFRoSUxPSIJ6zjS/mk53nDENCgG4NWwMgbg=
-#
-#server:
-#  port: 8080
-#
-#spring:
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: daoquocbao2k04@gmail.com
-#    password: fydz hfxc bgvn ndri
-#    protocol: smtp
-#    properties:
-#      mail.smtp.auth: true
-#      mail.smtp.starttls.enable: true
-#  servlet:
-#    multipart:
-#      max-file-size: -1
-#      max-request-size: -1
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/websiteroomforrent
-#    username: root
-#    password: Baomax1001.
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
-#      dialect: org.hibernate.dialect.MySQL8Dialect
-#      format_sql: true
-#
-#api:
-#  prefix: api
-#
-#jwt:
-#  expiration: 2592000 # 30 days = 30 * 24 * 60 * 60
-#  secretKey: XF/TkGiBVFRoSUxPSIJ6zjS/mk53nDENCgG4NWwMgbg=
 server:
-  port: ${PORT:8080} # Heroku sẽ cung cấp biến PORT tự động
+  port: 8080
 
 spring:
+  profiles:
+    active: default
   mail:
     host: smtp.gmail.com
     port: 587
@@ -86,19 +18,17 @@ spring:
       max-file-size: -1
       max-request-size: -1
   datasource:
-    url: ${JAWSDB_URL} # Đọc URL kết nối từ biến môi trường JAWSDB_URL
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USERNAME:root} # Username mặc định nếu không có biến môi trường
-    password: ${DB_PASSWORD:password} # Password mặc định nếu không có biến môi trường
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/websiteroomforrent}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:123456}
+    driver-class-name: org.postgresql.Driver
+#    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.MySQL8Dialect
-    properties:
-      hibernate:
-        format_sql: true
-
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 api:
   prefix: api
 

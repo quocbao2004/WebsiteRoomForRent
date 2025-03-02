@@ -71,7 +71,7 @@ public class UserController {
             tokenEntity.setToken(token);
             tokenEntity.setExpired(false);
             tokenEntity.setTokenType("Bearer");
-            tokenEntity.setUser(userRepository.findById(2L).get());
+            tokenEntity.setUser(userRepository.findById(1L).get());
             LocalDateTime expirationDate = LocalDateTime.now().plusDays(30);
             tokenEntity.setExpirationDate(LocalDateTime.parse(expirationDate.toString()));
             tokenRepository.save(tokenEntity);
