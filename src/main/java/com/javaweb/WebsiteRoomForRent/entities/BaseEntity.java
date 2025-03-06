@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-
     @Column(name = "createddate")
     @CreatedDate
     private LocalDateTime createdDate;

@@ -1,14 +1,13 @@
 server:
   port: 8080
-
 spring:
   profiles:
     active: default
   mail:
     host: smtp.gmail.com
     port: 587
-    username: daoquocbao2k04@gmail.com
-    password: fydz hfxc bgvn ndri
+    username: nguyenminhtrung437393@gmail.com
+    password: bxnw zkuk ikyp yurr
     protocol: smtp
     properties:
       mail.smtp.auth: true
@@ -18,15 +17,19 @@ spring:
       max-file-size: -1
       max-request-size: -1
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/websiteroomforrent}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:123456}
+#    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/websiteroomforrent}
+#    url: jdbc:postgresql://${RAILWAY_PRIVATE_DOMAIN}:5432/${PGDATABASE}
+#    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+#    password: ${SPRING_DATASOURCE_PASSWORD:123456}
+#    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ep-restless-moon-a8cx6ax9-pooler.eastus2.azure.neon.tech:5432/websiteroomforrent?sslmode=require
+    username: websiteroomforrent_owner
+    password: npg_0pAfNalvX9Dj
     driver-class-name: org.postgresql.Driver
-#    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 #    database-platform: org.hibernate.dialect.MySQL8Dialect
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 api:
